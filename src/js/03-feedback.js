@@ -16,20 +16,22 @@ function saveInStorage() {
 
 form.addEventListener('input', throttle(saveInStorage, 500));
 
-form.addEventListener('submit', e => {
-  e.preventDefault();
-  console.log(localStorage.getItem(JSON.parse(localStorageKey)));
-  form.reset();
-  localStorage.removeItem(localStorageKey);
-});
-
 window.addEventListener('load', () => {
   try {
     const storedFeedback = JSON.parse(localStorage.getItem(localStorageKey));
+    if (storedFeedback === null) {
+      return;
+    }
     form.elements.email.value = storedFeedback.mail;
     form.elements.message.value = storedFeedback.message;
-    return;
   } catch (error) {
     console.log(error.message);
   }
+});
+
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  console.log(JSON.parse(localStorage.getItem(localStorageKey)));
+  form.reset();
+  localStorage.removeItem(localStorageKey);
 });
