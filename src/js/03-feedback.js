@@ -17,16 +17,12 @@ function saveInStorage() {
 form.addEventListener('input', throttle(saveInStorage, 500));
 
 window.addEventListener('load', () => {
-  try {
-    const storedFeedback = JSON.parse(localStorage.getItem(localStorageKey));
-    if (storedFeedback === null) {
-      return;
-    }
-    form.elements.email.value = storedFeedback.mail;
-    form.elements.message.value = storedFeedback.message;
-  } catch (error) {
-    console.log(error.message);
+  const storedFeedback = JSON.parse(localStorage.getItem(localStorageKey));
+  if (storedFeedback === null) {
+    return;
   }
+  form.elements.email.value = storedFeedback.mail;
+  form.elements.message.value = storedFeedback.message;
 });
 
 form.addEventListener('submit', e => {
